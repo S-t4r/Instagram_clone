@@ -18,6 +18,19 @@ form input:focus {
     background-color: #dddddd;
 }
 
+form textarea {
+    height: 70px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 5px;
+    width: 50%;
+}
+form textarea:focus {
+    transition: background-color 0.5s;
+    background-color: #dddddd;
+}
+
 form button {
     color: white;
     background-color: blue;

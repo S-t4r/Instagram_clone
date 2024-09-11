@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import './Register.css'
+import { useCustomNavigate } from '../utils';
 import getCSRFToken from '../utils'
+import { useUser } from '../userContext/UserContext';
+import './Register.css'
 
-export default function Register() {
+export default function Register({ setHeaderKey }) {
     // Form object to send to view
     const [formData, setFormData] = useState({
         email: "",
@@ -10,6 +12,9 @@ export default function Register() {
         password: "",
         confirmPassword: "",
     });
+    const customNavigate = useCustomNavigate();
+    const { user, setUser } = useUser();
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -19,6 +24,12 @@ export default function Register() {
         });
     };
 
+    // Image
+    const [file, setFile] = useState(null);
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
     
@@ -27,21 +38,21 @@ export default function Register() {
         const password = event.target['password'].value;
         const confirmPassword = event.target['confirmPassword'].value;
     
-        const formData = new URLSearchParams();
+        const formData = new FormData();
         formData.append('email', email);
         formData.append('username', username);
         formData.append('password', password);
         formData.append('confirmPassword', confirmPassword);
+        formData.append('image', file);
     
         const csrfToken = getCSRFToken();
         
         fetch('/users/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRFToken': csrfToken
             },
-            body: formData.toString()
+            body: formData,
         })
         .then(() => {
             // Fetch messages after form submission
@@ -53,7 +64,9 @@ export default function Register() {
                 alert(data[0].message);
             }
             else {
-                window.location.href = ('/users/')
+                setUser({ username })
+                customNavigate('/users/profile');
+                setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
             }
         })
         .catch(error => {
@@ -62,7 +75,7 @@ export default function Register() {
     };
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType='multipart/form-data'>
         <input
             type="email"
             name="email"
@@ -90,6 +103,11 @@ export default function Register() {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
+        />
+        <input
+            type="file"
+            name="image"
+            onChange={handleFileChange}
         />
         <button type="submit">Register</button>
         <a href="login">Already have an account?</a>

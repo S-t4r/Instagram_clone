@@ -1,6 +1,10 @@
 import React, { useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import './UserProfile.css'
 
 export default function UserProfile() {
+    const navigate = useNavigate();
+
     const [user, setUser] = useState(null)
     useEffect(() => {
         fetch('/users/profile')
@@ -10,6 +14,7 @@ export default function UserProfile() {
         });
     }, []);
     
+    
     if (!user) {
         return (
             <>
@@ -18,19 +23,23 @@ export default function UserProfile() {
         )
     }
 
+    
     return (
-        <>
+        <div className='user-profile'>
             <div>
-                <img/>
+                <img src={user.profile_image}/>
                 <h1>{user.username}</h1>
+                <p>{user.bio}</p>
+            </div>
+            <div className='profile-details'>
+                <p><span>0</span>Posts</p>
+                <p><span>0</span>Followers</p>
+                <p><span>0</span>Followings</p>
             </div>
             <div>
-                <p>Posts: 0</p>
-                <p>Followers: 0</p>
-                <p>Followings: 0</p>
+                <button onClick={() => navigate('/users/edit')}>Edit Profile</button>
+                <button onClick={() => navigate('/users/share')}>Share Profile</button>
             </div>
-            <button>edit</button>
-            
-        </>
+        </div>
     )
 }

@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
+import { useCustomNavigate } from '../utils';
 import getCSRFToken from '../utils';
+import { useUser } from '../userContext/UserContext';
 import './Register.css'
 
-export default function Login() {
+export default function Login({ setHeaderKey }) {
      // Form object to send to view
      const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
+    const customNavigate = useCustomNavigate();
+    const { user, setUser } = useUser();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -25,7 +29,7 @@ export default function Login() {
         const username = event.target['username'].value;
         const password = event.target['password'].value;
     
-        const formData = new URLSearchParams();
+        const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
 
@@ -34,10 +38,9 @@ export default function Login() {
         fetch('/users/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRFToken': csrfToken
             },
-            body: formData.toString()
+            body: formData,
         })
         .then(() => {
             // Fetch messages after form submission
@@ -49,7 +52,9 @@ export default function Login() {
                 alert(data[0].message);
             }
             else {
-                window.location.href = '/users/';
+                setUser({ username })
+                customNavigate('/users/profile');
+                setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
             }
         })
         .catch(error => {

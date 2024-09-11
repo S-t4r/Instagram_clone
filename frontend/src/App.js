@@ -1,37 +1,21 @@
-import { useEffect } from 'react'
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Layout from './layout/Layout';
-import UserProfile from './users/UserProfile';
-import Register from './users/Register';
-import Login from './users/Login'
-import ProtectedRoute from './userContext/ProtectedRoute';
+import Users from './users/Users';
 
 import './App.css';
 
 function App() {
+  // To reload the Header
+  const [headerKey, setHeaderKey] = useState(0);
+    
   return (
     <Router>
-      <Layout>
+      <Layout headerKey={headerKey}>
         <Routes>
           {/* Users Application */}
-          <Route path="/users/profile" element={<UserProfile />} />
-          <Route
-            path="/users/login"
-            element={
-            <ProtectedRoute>
-              <Login />
-            </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/users/register"
-            element={
-            <ProtectedRoute>
-              <Register />
-            </ProtectedRoute>
-            }
-          />
+          <Route path="/users/*" element={<Users setHeaderKey={setHeaderKey} />} />
         </Routes>
       </Layout>
     </Router>

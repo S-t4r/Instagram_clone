@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 const getCSRFToken = () => {
     let csrfToken = null;
     const cookies = document.cookie.split(';');
@@ -9,6 +11,12 @@ const getCSRFToken = () => {
         }
     }
     return csrfToken;
+};
+
+
+export const useCustomNavigate = () => {
+    const navigate = useNavigate();
+    return (path) => navigate(path);
 };
 
 export default getCSRFToken
