@@ -46,6 +46,7 @@ def register(request):
             print(e)
             messages.error(request, "Username and/or Email already taken.")
             return render(request, "index.html")
+        
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:

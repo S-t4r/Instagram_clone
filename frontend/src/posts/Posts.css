@@ -1,0 +1,7 @@
+.post-image {
+    width: 100%;
+    max-width: 288px;
+    height: auto;
+    min-height: 288px;
+    object-fit: cover;
+}
