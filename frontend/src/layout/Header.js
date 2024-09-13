@@ -17,7 +17,6 @@ export default function Header({ setHeaderKey, username }) {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrfToken,
-                'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
         .then(() => {
@@ -47,7 +46,7 @@ export default function Header({ setHeaderKey, username }) {
             {username ? (
             <>
                 <h2>
-                    <Link to='/users/profile'>
+                    <Link to={`/users/${username}/`}>
                         {username}
                     </Link>
                 </h2>

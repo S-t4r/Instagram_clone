@@ -1,9 +1,9 @@
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 
 from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("create_posts", views.create_posts, name="create_posts"),
+    path("show_posts", views.show_posts, name="show_posts"),
 ]

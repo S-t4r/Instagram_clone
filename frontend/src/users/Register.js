@@ -3,6 +3,7 @@ import { useCustomNavigate } from '../utils';
 import getCSRFToken from '../utils'
 import { useUser } from '../userContext/UserContext';
 import './Register.css'
+import '../posts/Posts.css'
 
 export default function Register({ setHeaderKey }) {
     // Form object to send to view
@@ -26,9 +27,12 @@ export default function Register({ setHeaderKey }) {
 
     // Image
     const [file, setFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
     const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
-    }
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+        setImagePreview(URL.createObjectURL(selectedFile))
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -65,7 +69,7 @@ export default function Register({ setHeaderKey }) {
             }
             else {
                 setUser({ username })
-                customNavigate('/users/profile');
+                customNavigate(`/users/${username}/`)
                 setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
             }
         })
@@ -109,6 +113,7 @@ export default function Register({ setHeaderKey }) {
             name="image"
             onChange={handleFileChange}
         />
+        {imagePreview && <img src={imagePreview} alt="Selected" className='post-image' />}
         <button type="submit">Register</button>
         <a href="login">Already have an account?</a>
       </form>  

@@ -53,7 +53,7 @@ export default function Login({ setHeaderKey }) {
             }
             else {
                 setUser({ username })
-                customNavigate('/users/profile');
+                customNavigate(`/users/${username}`);
                 setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
             }
         })

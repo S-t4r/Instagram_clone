@@ -1,17 +1,31 @@
 import React, { useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import PostObject from '../posts/PostObject';
 import './UserProfile.css'
 
 export default function UserProfile() {
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(null)
+    const { username } = useParams();
+    const [loggedInUser, setLoggedInUser] = useState(null);
+    const [user, setUser] = useState(null);
+
+    // Profile user
     useEffect(() => {
-        fetch('/users/profile')
+        fetch(`/users/${username}/`)
         .then(response => response.json())
         .then(data => {
             setUser(data);
         });
+    }, [username]);
+
+    // Set Logged in user
+    useEffect(() => {
+        fetch('/api/get_user_data')
+            .then(response => response.json())
+            .then(data => {
+                setLoggedInUser(data.username);
+            });
     }, []);
     
     
@@ -37,8 +51,13 @@ export default function UserProfile() {
                 <p><span>0</span>Followings</p>
             </div>
             <div>
-                <button onClick={() => navigate('/users/edit')}>Edit Profile</button>
-                <button onClick={() => navigate('/users/share')}>Share Profile</button>
+                {user.username === loggedInUser && (
+                    <button onClick={() => navigate(`/users/${username}/edit/`)}>Edit Profile</button>
+                )}
+                <button onClick={() => navigate(`/users/${username}/share`)}>Share Profile</button>
+            </div>
+            <div>
+                <PostObject />
             </div>
         </div>
     )

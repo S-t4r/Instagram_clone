@@ -10,13 +10,18 @@ export default function NewPost() {
         const { name, value, files } = event.target;
     
         if (name === 'image' && files[0]) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFormData((prevData) => ({ ...prevData, imagePreview: reader.result, image: files[0] }));
-            };
-            reader.readAsDataURL(files[0]);
-        } else {
-            setFormData((prevData) => ({ ...prevData, [name]: value }));
+            const imageUrl = URL.createObjectURL(files[0]);
+            setFormData((prevData) => ({
+                ...prevData,
+                imagePreview: imageUrl,
+                image: files[0] 
+            }));
+        }
+        else {
+            setFormData((prevData) => ({ 
+                ...prevData,
+                [name]: value 
+            }));
         }
     };
 
@@ -30,7 +35,7 @@ export default function NewPost() {
         
         const csrfToken = getCSRFToken();
 
-        fetch('/posts/', {
+        fetch('/posts/create_posts', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrfToken
@@ -47,7 +52,7 @@ export default function NewPost() {
                 alert(data[0].message);
             }
             else {
-                customNavigate('/users/profile')
+                customNavigate('/')
             }
         })
         .catch(error => {

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import HttpResponseRedirect, render, redirect, get_object_or_404
 from django.urls import reverse
 
@@ -84,9 +84,24 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
+    return JsonResponse({
+        "username": user.username,
+        "profile_image": profile.profile_image.url if profile.profile_image else None,
+        "bio": profile.bio,
+        "following": [followed_user.username for followed_user in profile.following.all()],
+    })
+
 @login_required
-def profile(request):
+def edit(request, username):
     if request.method == 'POST':
+        # user = get_object_or_404(User, username=username)
+        profile = get_object_or_404(Profile, user__username=username)
+        
+        if profile.user.id != request.user.id:
+            return HttpResponseForbidden("You are not allowed to edit this profile.")
         if "image" in request.FILES:
             image = request.FILES["image"]
         else:
@@ -95,7 +110,6 @@ def profile(request):
         
         # Attempt to update image and bio
         try:
-            profile = get_object_or_404(Profile, user=request.user)
             profile.bio = bio
             if not image is None:
                 profile.profile_image = image
@@ -108,14 +122,3 @@ def profile(request):
             print(e)
             messages.error(request, "Something went wrong.")
             return redirect("index")
-            
-
-    else:
-        user = get_object_or_404(User, username=request.user.username)
-        profile = get_object_or_404(Profile, user=user)
-        return JsonResponse({
-            "username": user.username,
-            "profile_image": profile.profile_image.url if profile.profile_image else None,
-            "bio": profile.bio,
-            "following": [followed_user.username for followed_user in profile.following.all()],
-        })
