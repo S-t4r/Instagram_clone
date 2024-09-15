@@ -17,7 +17,7 @@ export default function PostObject() {
             })
             .then(data => setPosts(data))
             .catch(error => console.error('Error fetching posts:', error));
-    }, []);
+    }, [username]);
 
     return (
         <div>

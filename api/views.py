@@ -4,8 +4,9 @@ from django.contrib import messages
 
 def get_user_data(request):
     if request.user.is_authenticated:
-        return JsonResponse({"username": request.user.username})
-    return JsonResponse({"username": None})
+        following = list(request.user.profile.followings.values_list('user__username', flat=True))
+        return JsonResponse({"username": request.user.username, 'following': following})
+    return JsonResponse({"username": None, 'following': []})
 
 def get_messages(request):
     storage = messages.get_messages(request)

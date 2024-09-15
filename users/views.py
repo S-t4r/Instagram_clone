@@ -17,6 +17,7 @@ def index(request):
     
 
 def register(request):
+    """Register a user"""
     if request.user.is_authenticated:
         return redirect('/')
     
@@ -54,6 +55,7 @@ def register(request):
     
 
 def login_view(request):
+    """Log a user in, if already logged in redirect to /"""
     if request.user.is_authenticated:
         return redirect('/')
     
@@ -81,23 +83,31 @@ def login_view(request):
     
 @login_required
 def logout_view(request):
+    """Log a user out"""
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
 def profile(request, username):
+    """Send a JSON response containing user's information"""
     user = get_object_or_404(User, username=username)
     profile = get_object_or_404(Profile, user=user)
+    followings_count = profile.followings.count()
+    followers_count = profile.followers.count()
+    posts_count = profile.post_set.count()
+
     return JsonResponse({
         "username": user.username,
         "profile_image": profile.profile_image.url if profile.profile_image else None,
         "bio": profile.bio,
-        "following": [followed_user.username for followed_user in profile.following.all()],
+        "followings_count": followings_count,
+        "followers_count": followers_count,
+        "posts_count": posts_count,
     })
 
 @login_required
 def edit(request, username):
+    """Edit user profile"""
     if request.method == 'POST':
-        # user = get_object_or_404(User, username=username)
         profile = get_object_or_404(Profile, user__username=username)
         
         if profile.user.id != request.user.id:
@@ -122,3 +132,31 @@ def edit(request, username):
             print(e)
             messages.error(request, "Something went wrong.")
             return redirect("index")
+        
+@login_required
+def follow(request):
+    """Let users follow each other"""
+    if request.method == "POST":
+        # Check if user is logged in
+        if not request.user.is_authenticated:
+            messages.error(request, "You must log in.")
+            return redirect("index")
+        # Get target username
+        username = request.POST['username']
+        target_profile = get_object_or_404(Profile, user__username=username)
+        user_profile = get_object_or_404(Profile, user__username=request.user)
+
+        # Check if user is in followers
+        is_follower = target_profile.followers.filter(id=request.user.id).exists()
+        
+        # If hasn't yet followed
+        if not is_follower:
+            target_profile.followers.add(user_profile)
+            followers_count = target_profile.followers.count()
+            return JsonResponse({"followers_count": followers_count})
+        else:
+            target_profile.followers.remove(user_profile)
+            followers_count = target_profile.followers.count()
+            return JsonResponse({"followers_count": followers_count})
+        
+    

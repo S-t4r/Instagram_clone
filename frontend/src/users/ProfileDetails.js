@@ -1,0 +1,57 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Follow from './Follow';
+import ProfileStats from './ProfileStats';
+
+const ProfileDetails = ({ username, loggedInUser }) => {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    // Get user data
+    useEffect(() => {
+        fetch(`/users/${username}/`)
+            .then(response => response.json())
+            .then(data => {
+                setUser(data);
+            });
+    }, [username]);
+
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+
+    const handleFollowChange = (newCount) => {
+        user.followers_count = newCount;
+        setUser({ ...user })
+    };
+
+    return (
+        <div>
+            <div>
+                <img src={user.profile_image} className='profile-image' />
+                <h1>{user.username}</h1>
+                <p>{user.bio}</p>
+            </div>
+            <ProfileStats 
+                postsCount={user.posts_count} 
+                followersCount={user.followers_count} 
+                followingsCount={user.followings_count} 
+            />
+            <div>
+                {user.username === loggedInUser.username && (
+                    <button onClick={() => navigate(`/users/${username}/edit/`)}>Edit Profile</button>
+                )}
+                {user.username !== loggedInUser.username && (
+                    <Follow 
+                        username={user.username} 
+                        loggedInUser={loggedInUser}
+                        onFollowChange={handleFollowChange}
+                    />
+                )}
+                <button onClick={() => navigate(`/users/${username}/share`)}>Share Profile</button>
+            </div>
+        </div>
+    );
+};
+
+export default ProfileDetails;
