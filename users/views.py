@@ -26,7 +26,7 @@ def register(request):
         email = request.POST["email"]
         password = request.POST["password"]
         confirmation = request.POST["confirmPassword"]
-        image = request.FILES["image"]
+        image = request.FILES.get("image", None)
 
 
         # Ensure password matches confirmation
@@ -39,9 +39,9 @@ def register(request):
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
 
-            # Save the image
-            profile = Profile(user=user, profile_image=image)
-            profile.save()
+            # Update profile image
+            user.profile.profile_image = image
+            user.profile.save()
 
         except IntegrityError as e:
             print(e)

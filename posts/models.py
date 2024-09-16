@@ -14,3 +14,12 @@ class Post(models.Model):
             if os.path.isfile(self.post_image.path):
                 os.remove(self.post_image.path)
         super().delete(*args, **kwargs)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "profile": self.profile.user.username,
+            "caption": self.caption,
+            "post_image": self.post_image.url,
+            "timestamp": self.timestamp.isoformat()
+        }

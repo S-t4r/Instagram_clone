@@ -3,7 +3,7 @@ import { useCustomNavigate } from '../utils';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../userContext/UserContext';
 
-export default function Header({ setHeaderKey, username }) {
+export default function Header({ username }) {
     const { user, setUser } = useUser();
     const customNavigate = useCustomNavigate();
     // Logout
@@ -31,7 +31,7 @@ export default function Header({ setHeaderKey, username }) {
             else {
                 setUser({ username:null })
                 customNavigate('/');
-                setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
+                // setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
             }
         })
         .catch(error => {

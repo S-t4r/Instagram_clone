@@ -6,16 +6,7 @@ import Navbar from './Navbar';
 
 export default function Layout({ headerKey, children }) {
     
-    const { user, setUser } = useUser();
-    
-
-    useEffect(() => {
-        fetch('/api/get_user_data')
-            .then(response => response.json())
-            .then(data => {
-                setUser(data);
-            });
-    }, [setUser]);
+    const { user } = useUser();
 
     useEffect(() => {
         fetch('http://localhost:8000/api/send_csrf')

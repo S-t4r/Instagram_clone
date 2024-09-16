@@ -1,29 +1,23 @@
-import React, { useState, useEffect} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import PostObject from '../posts/PostObject';
+import { useParams } from 'react-router-dom';
+import PostsContainer from '../posts/PostsContainer';
 import ProfileDetails from './ProfileDetails';
+import { useUser } from '../userContext/UserContext';
 import './UserProfile.css'
 
 export default function UserProfile() {
-    const navigate = useNavigate();
 
     const { username } = useParams();
-    const [loggedInUser, setLoggedInUser] = useState({ username: '', followings: [] });
+    const { user } = useUser();
 
-    // Set Logged in user
-    useEffect(() => {
-        fetch('/api/get_user_data')
-            .then(response => response.json())
-            .then(data => {
-                setLoggedInUser(data);
-            });
-    }, []);
-
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+    
     return (
         <div className='user-profile'>
-            <ProfileDetails username={username} loggedInUser={loggedInUser} />
+            <ProfileDetails username={username} loggedInUser={user} />
             <div>
-                <PostObject />
+                <PostsContainer username={username} />
             </div>
         </div>
     );

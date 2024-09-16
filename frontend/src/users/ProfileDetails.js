@@ -6,8 +6,9 @@ import ProfileStats from './ProfileStats';
 const ProfileDetails = ({ username, loggedInUser }) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    
 
-    // Get user data
+    // Get user profile data
     useEffect(() => {
         fetch(`/users/${username}/`)
             .then(response => response.json())
@@ -48,7 +49,7 @@ const ProfileDetails = ({ username, loggedInUser }) => {
                         onFollowChange={handleFollowChange}
                     />
                 )}
-                <button onClick={() => navigate(`/users/${username}/share`)}>Share Profile</button>
+                <button onClick={() => navigate(`/users/${username}/share/`)}>Share Profile</button>
             </div>
         </div>
     );
