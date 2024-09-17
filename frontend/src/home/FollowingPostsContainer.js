@@ -15,7 +15,8 @@ const FollowingPostsContainer = ({ username }) => {
                     index === self.findIndex((p) => p.id === post.id)
                 );
                 setPosts(filteredPosts);
-                setHasMore(data.posts.length > 0);
+                // no more request if there are less than 10 posts
+                setHasMore(data.posts.length === 10);
             })
             .catch(error => console.error('Error fetching posts:', error));
     };
@@ -25,7 +26,11 @@ const FollowingPostsContainer = ({ username }) => {
     }, [page]);
 
     const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore) return;
+        if (window.innerHeight + document.documentElement.scrollTop !== 
+                document.documentElement.offsetHeight 
+            || !hasMore) {
+                return
+            };
         setPage(prevPage => prevPage + 1);
     };
 
@@ -35,9 +40,9 @@ const FollowingPostsContainer = ({ username }) => {
     }, [hasMore]);
 
     return (
-        <div>
+        <div className="home">
             {posts.map(post => (
-                <PostObject key={post.id} post={post} username={post.profile} />
+                <PostObject key={post.id} post={post} />
             ))}
         </div>
     );

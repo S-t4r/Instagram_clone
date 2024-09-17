@@ -2,7 +2,7 @@
 
 ### Applications:
     [x] - Users: For user authentication, profiles, and settings.
-    - Posts: For creating, viewing, and managing posts.
+    [x] - Posts: For creating, viewing, and managing posts.
     - Comments: For adding and managing comments on posts.
     - Likes: for handling likes on posts and comments.
     - Notifications: for user notifications.

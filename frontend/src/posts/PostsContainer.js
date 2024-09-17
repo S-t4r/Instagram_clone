@@ -21,7 +21,7 @@ const PostsContainer = ({ username }) => {
     return (
         <div>
           {posts.map(post => (
-            <PostObject key={post.id} post={post} username={post.profile} />
+            <PostObject key={post.id} post={post} />
           ))}
         </div>
       );

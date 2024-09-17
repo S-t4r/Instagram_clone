@@ -1,20 +1,37 @@
+import { useState } from 'react';
+import { calcTime } from '../utils';
+import PostHeader from './PostHeader';
+import PostCaption from './PostCaption';
+import PostComment from './PostComment';
 import './Posts.css'
 
-export default function PostObject({ post, username }) {        
+export default function PostObject({ post }) {
+    // To edit
+    const [isEditing, setIsEditing] = useState(false);
+    const [caption, setCaption] = useState(post.caption);
+    
     return (
-        <div>
-            <div>
-                <button>Edit</button>
-                <button>Remove</button>
-                <h2>
-                    <a href={`http://localhost:3000/users/${username}`}>
-                        {username}
-                    </a>
-                </h2>
-                <img src={`${post.post_image}`} className='post-image' alt="Post" />
-                <p>{post.caption}</p>
-                <small>{post.timestamp}</small>
-            </div>
+        <div className='postObject' id={`post-${post.id}`}>
+            <PostHeader 
+                post={post} 
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+            />
+
+            <img src={`${post.post_image}`} className='post-image' alt="Post" />
+
+            <PostCaption 
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                caption={caption} 
+                setCaption={setCaption} 
+                postId={post.id}
+            />
+            <sub>{calcTime({ timestamp:post.timestamp })}</sub>
+            <h1 style={{ textAlign: 'start', color: 'red' }}>like</h1>
+
+            <PostComment postId={post.id} />
+            
         </div>
     );
 }

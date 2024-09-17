@@ -19,7 +19,16 @@ class Post(models.Model):
         return {
             "id": self.id,
             "profile": self.profile.user.username,
+            "profile_image": self.profile.profile_image.url,
             "caption": self.caption,
             "post_image": self.post_image.url,
-            "timestamp": self.timestamp.isoformat()
+            "timestamp": self.timestamp.isoformat(),
+            "comments": [
+                {
+                    "user": comment.user.username,
+                    "content": comment.content,
+                    "timestamp": comment.timestamp.isoformat()
+                }
+            for comment in self.comments.all()
+            ]
         }

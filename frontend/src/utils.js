@@ -19,4 +19,27 @@ export const useCustomNavigate = () => {
     return (path) => navigate(path);
 };
 
+export function calcTime({ timestamp }) {
+
+    const postDate = new Date(timestamp);
+    const now = new Date()
+    
+    // Calculate difference in minutes
+    const diffInMs = now - postDate;
+    
+    // Convert to minutes, hours, and days
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+    let timePassed;
+    if (diffInMinutes < 60) {
+        timePassed = `${diffInMinutes} minutes ago`;
+    } else if (diffInHours < 24) {
+        timePassed = `${diffInHours} hours ago`;
+    } else {
+        timePassed = `${diffInDays} days ago`;
+    }
+    return timePassed;
+}
+
 export default getCSRFToken

@@ -43,8 +43,8 @@ body {
     min-height: 80vh;
     width: 95%;
     margin: auto;
-    border-right: 1px solid white;
-    border-left: 1px solid white;
+    border-right: 1px dashed #000044;
+    border-left: 1px dashed #000044;
     border-radius: 5px;
 }
 

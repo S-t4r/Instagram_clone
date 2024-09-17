@@ -64,7 +64,6 @@ export default function Register({ setHeaderKey }) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             if (data.length > 0) {
                 alert(data[0].message);
             }
