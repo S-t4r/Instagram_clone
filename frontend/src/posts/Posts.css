@@ -44,7 +44,7 @@
 
 .postObject button:hover {
     cursor: pointer;
-    transition: background-color 0.5s;
+    transition: background-color 0.5s ease-in-out;
     background-color: #222222;
 }
 
@@ -141,4 +141,48 @@
 .comment-remove {
     font-size: 0.7rem !important;
     margin-left: auto !important;
+}
+
+.like-div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.like-div span {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.like-button {
+    text-align: start;
+    font-size: 2rem !important;
+    color: red !important;
+    background: none !important;
+    transition: color 0.5s !important;
+}
+
+.like-button:hover {
+    color: #aa0000 !important;
+}
+
+.comment-like-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.comment-like-div sub {
+    color: red;
+    font-size: 1rem;
+    transition: color 0.5s;
+}
+
+.comment-like-div sub:hover {
+    cursor: pointer;
+    color: #aa0000;
+}
+
+.comment-like-div sup {
+    margin-left: 5px;
 }

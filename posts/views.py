@@ -79,17 +79,18 @@ def edit(request):
         return JsonResponse({'error': str(e)}, status=500)
     
 def remove(request):
-    post_id = request.GET.get('post_id')
-    if not post_id:
-        return JsonResponse({'error': 'Invalid input'}, status=200)
-    
-    try:
-        post = get_object_or_404(Post, pk=post_id)
-
-        if request.user != post.profile.user:
-            return JsonResponse({'error': 'Invalid User.'}, status=403)
+    if request.method == 'POST':
+        post_id = request.GET.get('post_id')
+        if not post_id:
+            return JsonResponse({'error': 'Invalid input'}, status=200)
         
-        post.delete()
-        return JsonResponse({'status': 'success'}, status=200)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        try:
+            post = get_object_or_404(Post, pk=post_id)
+
+            if request.user != post.profile.user:
+                return JsonResponse({'error': 'Invalid User.'}, status=403)
+            
+            post.delete()
+            return JsonResponse({'status': 'success'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)

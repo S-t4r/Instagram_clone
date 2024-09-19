@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from .models import Post, Comment
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
@@ -27,3 +28,20 @@ def index(request):
             return JsonResponse({'comments': serialized_comments})
         else:
             return JsonResponse({'error': 'post_id not provided'}, status=400)
+        
+def remove(request):
+    if request.method == 'POST':
+        comment_id = request.GET.get('comment')
+        if not comment_id:
+            return JsonResponse({'error': 'Invalid input'}, status=400)
+        
+        try:
+            comment = get_object_or_404(Comment, pk=comment_id)
+
+            if request.user != comment.user:
+                return JsonResponse({'error': 'Invalid User.'}, status=403)
+            
+            comment.delete()
+            return JsonResponse({'status': 'success'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)

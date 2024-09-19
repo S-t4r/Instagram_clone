@@ -7,17 +7,17 @@ export default function Navbar({ username }) {
         <nav className='navbar'>
             {username ? (
                 <>
-                <button onClick={() => navigate('/')}>Home</button>
-                <button onClick={() => navigate('/posts')}>Post</button>
-                <button onClick={() => navigate('/search')}>Search</button>
-                <button onClick={() => navigate(`/users/${username}`)}>Profile</button>
+                <button onClick={() => navigate('/')}><i className="fa fa-home"></i></button>
+                <button onClick={() => navigate('/posts')}><i className="fa fa-plus"></i></button>
+                <button onClick={() => navigate('/search')}><i className="fa fa-search"></i></button>
+                <button onClick={() => navigate(`/users/${username}`)}><i className="fa fa-user"></i></button>
                 </>
             ) : (
                 <>
-                    <button>Home</button>
-                    <button>Post</button>
-                    <button>Search</button>
-                    <button>Profile</button>    
+                    <button><i className="fa fa-home"></i></button>
+                    <button><i className="fa fa-plus"></i></button>
+                    <button><i className="fa fa-search"></i></button>
+                    <button><i className="fa fa-user"></i></button>    
                 </>
             )}
         </nav>

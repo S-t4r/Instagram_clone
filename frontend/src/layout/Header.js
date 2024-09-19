@@ -42,20 +42,20 @@ export default function Header({ username }) {
     const navigate = useNavigate();
     return (
         <header className='header-secondary'>
-            <h1>Instagram Clone</h1>
+            <h1>Instagram</h1>
             {username ? (
             <>
-                <h2>
+                <h1>
                     <Link to={`/users/${username}/`}>
                         {username}
                     </Link>
-                </h2>
+                </h1>
                 <button>Direct</button>
                 <button onClick={logout}>Logout</button>
             </>
             ) : (
              <>
-             <h2>Welcome</h2>
+             <h1>Welcome</h1>
              <button onClick={() => navigate('/users/login')}>Login</button>
              <button onClick={() => navigate('/users/register')}>Register</button>
              </>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { calcTime } from '../utils';
 import PostHeader from './PostHeader';
 import PostCaption from './PostCaption';
@@ -10,6 +10,19 @@ export default function PostObject({ post }) {
     // To edit
     const [isEditing, setIsEditing] = useState(false);
     const [caption, setCaption] = useState(post.caption);
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0)
+
+    // Check if the user has liked the post
+    useEffect(() => {
+        fetch(`/likes/status/${post.id}/`)
+            .then(response => response.json())
+            .then(data => {
+                setLiked(data.liked);
+                setLikeCount(data.like_count);
+            })
+            .catch(error => console.log(error));
+    }, [post.id]);
     
     return (
         <div className='postObject' id={`post-${post.id}`}>
@@ -29,7 +42,13 @@ export default function PostObject({ post }) {
                 postId={post.id}
             />
             <sub>{calcTime({ timestamp:post.timestamp })}</sub>
-            <PostLike />
+            <PostLike 
+                postId={post.id}
+                liked={liked}
+                setLiked={setLiked}
+                likeCount={likeCount}
+                setLikeCount={setLikeCount}
+            />
 
             <PostComment postId={post.id} />
             

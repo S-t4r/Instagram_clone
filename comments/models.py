@@ -1,6 +1,6 @@
 from django.db import models
-from users.models import User
 from posts.models import Post
+from users.models import  User
 
 # Create your models here.
 
@@ -12,6 +12,7 @@ class Comment(models.Model):
 
     def serialize(self):
         return {
+            'id': self.pk,
             'post': self.post.pk,
             'user': self.user.username,
             'profile_image': self.user.profile.profile_image.url,
