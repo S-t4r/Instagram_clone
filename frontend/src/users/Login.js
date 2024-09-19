@@ -11,7 +11,7 @@ export default function Login({ setHeaderKey }) {
         password: "",
     });
     const customNavigate = useCustomNavigate();
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
 
     const handleChange = (event) => {
         const { name, value } = event.target;

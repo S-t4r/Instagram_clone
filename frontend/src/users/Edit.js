@@ -16,7 +16,7 @@ export default function Edit() {
         .then(data => {
             setFormData({ bio: data.bio, image:null })
         });
-    }, []);
+    }, [username]);
 
     const handleChange = (event) => {
         const { name, value, files } = event.target;

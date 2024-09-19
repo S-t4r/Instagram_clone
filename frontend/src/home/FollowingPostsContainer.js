@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PostObject from '../posts/PostObject';
 
 const FollowingPostsContainer = ({ username }) => {
@@ -6,7 +6,7 @@ const FollowingPostsContainer = ({ username }) => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
 
-    const fetchPosts = (page) => {
+    const fetchPosts = useCallback((page) => {
         fetch(`/posts/following?username=${username}&page=${page}`)
             .then(response => response.json())
             .then(data => {
@@ -19,25 +19,25 @@ const FollowingPostsContainer = ({ username }) => {
                 setHasMore(data.posts.length === 10);
             })
             .catch(error => console.error('Error fetching posts:', error));
-    };
+    }, [username, posts]);
     
     useEffect(() => {
         fetchPosts(page);
-    }, [page]);
+    }, [page, fetchPosts]);
 
-    const handleScroll = () => {
+    const handleScroll = useCallback(() => {
         if (window.innerHeight + document.documentElement.scrollTop !== 
                 document.documentElement.offsetHeight 
             || !hasMore) {
                 return
             };
         setPage(prevPage => prevPage + 1);
-    };
+    }, [hasMore]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [hasMore]);
+    }, [hasMore, handleScroll]);
 
     return (
         <div className="home">

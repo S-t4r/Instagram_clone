@@ -17,8 +17,7 @@ export default function PostHeader({ post, isEditing, setIsEditing }) {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success' ) {
-                console.log(data);                
+            if (data.status === 'success' ) {      
                 const postElement = document.getElementById(`post-${post.id}`);
                 if (postElement) {
                     postElement.remove();

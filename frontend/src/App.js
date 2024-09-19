@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import 'font-awesome/css/font-awesome.min.css'
 
 import { UserProvider } from './userContext/UserContext';
 import Layout from './layout/Layout';

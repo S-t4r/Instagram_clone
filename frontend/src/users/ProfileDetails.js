@@ -29,7 +29,11 @@ const ProfileDetails = ({ username, loggedInUser }) => {
     return (
         <div>
             <div>
-                <img src={user.profile_image} className='profile-image' />
+                <img 
+                    src={user.profile_image} 
+                    className='profile-image' 
+                    alt={`${user.username}'s profile`}
+                />
                 <h1>{user.username}</h1>
                 <p>{user.bio}</p>
             </div>

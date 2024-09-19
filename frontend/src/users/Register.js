@@ -14,7 +14,7 @@ export default function Register({ setHeaderKey }) {
         confirmPassword: "",
     });
     const customNavigate = useCustomNavigate();
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
 
 
     const handleChange = (event) => {

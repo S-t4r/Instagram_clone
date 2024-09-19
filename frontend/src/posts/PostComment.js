@@ -46,7 +46,7 @@ export default function PostComment({ postId }) {
         .then(data => {
             if (data.status === 'ok') {
                 setComment('');
-                setCommentList([...commentList, data.comment]);                
+                setCommentList([data.comment, ...commentList]);                
             }
         })
         .catch(error => {

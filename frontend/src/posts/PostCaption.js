@@ -1,4 +1,4 @@
-import getCSRFToken, { calcTime } from '../utils';
+import getCSRFToken from '../utils';
 
 export default function PostCaption({ postId, isEditing, setIsEditing, caption, setCaption }) {
     const csrfToken = getCSRFToken();

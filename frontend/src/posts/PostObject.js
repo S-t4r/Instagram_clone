@@ -4,6 +4,7 @@ import PostHeader from './PostHeader';
 import PostCaption from './PostCaption';
 import PostComment from './PostComment';
 import './Posts.css'
+import PostLike from './PostLike';
 
 export default function PostObject({ post }) {
     // To edit
@@ -28,7 +29,7 @@ export default function PostObject({ post }) {
                 postId={post.id}
             />
             <sub>{calcTime({ timestamp:post.timestamp })}</sub>
-            <h1 style={{ textAlign: 'start', color: 'red' }}>like</h1>
+            <PostLike />
 
             <PostComment postId={post.id} />
             

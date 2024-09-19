@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../userContext/UserContext';
 
 export default function Header({ username }) {
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
     const customNavigate = useCustomNavigate();
     // Logout
     function logout(event) {
