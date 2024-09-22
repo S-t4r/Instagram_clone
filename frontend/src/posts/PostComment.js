@@ -48,6 +48,9 @@ export default function PostComment({ postId }) {
                 setComment('');
                 setCommentList([data.comment, ...commentList]);                
             }
+            else if (data.status === "error") {
+                alert(data.message)
+            }
         })
         .catch(error => {
             console.log(error);

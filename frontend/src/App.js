@@ -7,6 +7,8 @@ import Layout from './layout/Layout';
 import Users from './users/Users';
 import Posts from './posts/Posts';
 import Home from './home/Home';
+import Notifications from './notifications/Notifications';
+import Direct_messages from './direct_messages/Direct_messages';
 
 import './App.css';
 
@@ -22,6 +24,8 @@ function App() {
             {/* Users Application */}
             <Route path="/users/*" element={<Users setHeaderKey={setHeaderKey} />} />
             <Route path="/posts/*" element={<Posts />} />
+            <Route path="/notifications/*" element={<Notifications />} />
+            <Route path="/direct_messages/*" element={<Direct_messages />} />
             <Route path="" element={<Home />} />
           </Routes>
         </Layout>

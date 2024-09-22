@@ -2,11 +2,13 @@ import getCSRFToken from '../utils';
 
 export default function PostCaption({ postId, isEditing, setIsEditing, caption, setCaption }) {
     const csrfToken = getCSRFToken();
+    
+    // Edit Post
     const handleChanges = () => {
         const formData = new FormData();
         formData.append('caption', caption)
         formData.append('post_id', postId)
-        fetch('posts/edit', {
+        fetch('/posts/edit/', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrfToken,

@@ -5,8 +5,9 @@
     [x] - Posts: For creating, viewing, and managing posts.
     [x] - Comments: For adding and managing comments on posts.
     [x] - Likes: for handling likes on posts and comments.
-    - Notifications: for user notifications.
+    [x] - Notifications: for user notifications.
     - Direct messages: for sending messages between users.
+    - Search: for searching for other users.
 
 #### Before starting the project:
     - Database Design: Plan your models and relationships between them.

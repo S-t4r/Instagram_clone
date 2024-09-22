@@ -6,6 +6,8 @@ import CommentsImage from './CommentsImage';
 export default function CommentsList({ comments }) {
     const { user } = useUser();
     const [commentLiked, setCommentLiked] = useState({});
+    // To stop calling the server over and over again
+    const [fetchedComments, setFetchedComments] = useState({});
 
     const handleRemove = (commentId) => {
         const csrfToken = getCSRFToken();
@@ -37,20 +39,26 @@ export default function CommentsList({ comments }) {
     
     // initially get the number of likes
     useEffect(() => {
-        comments.map(comment => {
-            fetch(`likes/comments_status/${comment.id}`)
-            .then(response => response.json())
-            .then(data => {
-                setCommentLiked(prevState => ({
-                    ...prevState,
-                    [comment.id]: {
-                        liked: data.liked,
-                        likeCount: data.like_count
-                    }
-                }));
-            })
-        })
-    }, [comments]);
+        comments.forEach(comment => {
+            if (!fetchedComments[comment.id]) {
+                fetch(`/likes/comments_status/${comment.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setCommentLiked(prevState => ({
+                        ...prevState,
+                        [comment.id]: {
+                            liked: data.liked,
+                            likeCount: data.like_count
+                        }
+                    }));
+                    setFetchedComments(prevState => ({
+                        ...prevState,
+                        [comment.id]: true
+                    }));
+                });
+            }
+        });
+    }, [comments, fetchedComments]);
 
     function handleLike(commentId) {
         const csrfToken = getCSRFToken();

@@ -45,14 +45,14 @@ export default function PostHeader({ post, isEditing, setIsEditing }) {
                 </div>
             )}
             <h2 className="post-link">
-                <a href={`users/${post.profile}`}>
+                <a href={`/users/${post.profile}`}>
                     <img
                         src={post.profile_image}
                         alt={`${post.profile}'s profile`}
                         className="post-profile-image"
                     />
                 </a>
-                <a href={`users/${post.profile}`}>
+                <a href={`/users/${post.profile}`}>
                     {post.profile}
                 </a>
             </h2>

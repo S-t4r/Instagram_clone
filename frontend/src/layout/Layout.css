@@ -83,3 +83,8 @@ body {
 .navbar button i {
     font-size: 2rem;
 }
+
+#notification-count {
+    color: red;
+    font-weight: bold;
+}

@@ -5,6 +5,8 @@ from .models import Post, Comment
 # Create your views here.
 def index(request):
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({"status": "error", "message": "Login to comment"}, status=403)
         comment_text = request.POST.get('comment')
         post_id = request.POST.get('post_id')
         user = request.user
@@ -31,6 +33,8 @@ def index(request):
         
 def remove(request):
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({"status": "error", "message": "Login!"}, status=403)
         comment_id = request.GET.get('comment')
         if not comment_id:
             return JsonResponse({'error': 'Invalid input'}, status=400)

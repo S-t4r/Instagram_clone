@@ -60,6 +60,8 @@ def following(request):
     
     return JsonResponse({"posts": posts_data})
 
+
+@login_required
 def edit(request):
     post_id = request.POST.get('post_id')
     caption = request.POST.get('caption')
@@ -77,7 +79,9 @@ def edit(request):
         return JsonResponse({'status': 'success'})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-    
+
+
+@login_required   
 def remove(request):
     if request.method == 'POST':
         post_id = request.GET.get('post_id')

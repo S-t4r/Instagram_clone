@@ -2,6 +2,7 @@ import getCSRFToken from '../utils';
 import { useCustomNavigate } from '../utils';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../userContext/UserContext';
+import { useState, useEffect } from 'react';
 
 export default function Header({ username }) {
     const { setUser } = useUser();
@@ -31,13 +32,26 @@ export default function Header({ username }) {
             else {
                 setUser({ username:null })
                 customNavigate('/');
-                // setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
+
+    // Fetch notifications and alert user every 60 seconds
+    const [notificationCount, setNotificationCount] = useState(0);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetch("/notifications/notifications_count")
+                .then(response => response.json())
+                .then(data => {
+                    setNotificationCount(data.unread_count);
+                });
+        }, 60000);
+    
+        return () => clearInterval(interval); // Cleanup on unmount
+    }, []);
     
     const navigate = useNavigate();
     return (
@@ -50,7 +64,11 @@ export default function Header({ username }) {
                         {username}
                     </Link>
                 </h1>
-                <button>Direct</button>
+                <button onClick={() => navigate('/direct_messages')}><i className="fa fa-envelope"></i></button>
+                <button onClick={() => { setNotificationCount(0); navigate('/notifications'); }}>
+                    <i className="fa fa-bell" id={notificationCount > 0 ? 'notification-count' : ''}>
+                    </i>
+                </button>
                 <button onClick={logout}>Logout</button>
             </>
             ) : (

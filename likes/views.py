@@ -5,6 +5,7 @@ from .models import Comment, CommentLike, Like, Post
 
 # Create your views here.
 def index(request):
+    """Like or Un-like a post"""
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return JsonResponse({'error': 'User not authenticated'}, status=401)
@@ -32,6 +33,7 @@ def index(request):
                 return JsonResponse({'error': f'db err:{e}'}, status=500)
 
 def status(request, post_id):
+    """The count of likes of a post"""
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
 
@@ -42,6 +44,7 @@ def status(request, post_id):
     return JsonResponse({'liked': liked, 'like_count': like_count}, status=200)
 
 def comments_status(request, comment_id):
+    """The counts of a comment's likes"""
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
 
@@ -52,6 +55,7 @@ def comments_status(request, comment_id):
     return JsonResponse({'liked': liked, 'like_count': like_count}, status=200)
 
 def comments(request):
+    """Liking a comment"""
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
     

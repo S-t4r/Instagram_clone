@@ -1,0 +1,16 @@
+.notifications {
+    font-weight: bold;
+    padding: 20px;
+    margin: auto;
+}
+
+.notifications-listing {
+    border: 1px solid blue;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.notifications-listing a {
+    font-size: 2rem;
+}

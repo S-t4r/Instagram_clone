@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Follow from './Follow';
 import ProfileStats from './ProfileStats';
+import Message from './Message';
 
 const ProfileDetails = ({ username, loggedInUser }) => {
     const [user, setUser] = useState(null);
@@ -47,11 +48,14 @@ const ProfileDetails = ({ username, loggedInUser }) => {
                     <button onClick={() => navigate(`/users/${username}/edit/`)}>Edit Profile</button>
                 )}
                 {user.username !== loggedInUser.username && (
-                    <Follow 
-                        username={user.username} 
-                        loggedInUser={loggedInUser}
-                        onFollowChange={handleFollowChange}
-                    />
+                    <>
+                        <Follow 
+                            username={user.username} 
+                            loggedInUser={loggedInUser}
+                            onFollowChange={handleFollowChange}
+                        />
+                        <Message username={user.username} />
+                    </>
                 )}
                 <button onClick={() => navigate(`/users/${username}/share/`)}>Share Profile</button>
             </div>
