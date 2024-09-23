@@ -25,9 +25,10 @@ export default function ChatWindow() {
             body: formData,
         })
         .then(response => response.json())
-        .then(data => {
+        .then(data => {            
             if (data.status === 'error') alert(data.message);
         });
+        setMessage('');
     }
 
     return (

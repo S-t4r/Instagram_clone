@@ -66,7 +66,7 @@ export default function Header({ username }) {
                 </h1>
                 <button onClick={() => navigate('/direct_messages')}><i className="fa fa-envelope"></i></button>
                 <button onClick={() => { setNotificationCount(0); navigate('/notifications'); }}>
-                    <i className="fa fa-bell" id={notificationCount > 0 ? 'notification-count' : ''}>
+                    <i className="fa fa-bell" style={notificationCount > 0 ? { color: 'red' } : {}}>
                     </i>
                 </button>
                 <button onClick={logout}>Logout</button>
