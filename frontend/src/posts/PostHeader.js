@@ -1,9 +1,11 @@
 import getCSRFToken from "../utils";
 import { useUser } from '../userContext/UserContext';
+import { useNavigate } from "react-router-dom";
 
 export default function PostHeader({ post, isEditing, setIsEditing }) {
     const { user } = useUser();
     const csrfToken = getCSRFToken();
+    const navigate = useNavigate();
 
     const handleRemove = () => {
         // Make sure
@@ -45,17 +47,18 @@ export default function PostHeader({ post, isEditing, setIsEditing }) {
                 </div>
             )}
             <h2 className="post-link">
-                <a href={`/users/${post.profile}`}>
+                <a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/users/${post.profile}`); }}>
                     <img
                         src={post.profile_image}
                         alt={`${post.profile}'s profile`}
                         className="post-profile-image"
                     />
                 </a>
-                <a href={`/users/${post.profile}`}>
+                <a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/users/${post.profile}`); }}>
                     {post.profile}
                 </a>
             </h2>
         </>
     );
 }
+

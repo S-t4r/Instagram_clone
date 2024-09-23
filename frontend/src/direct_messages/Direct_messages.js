@@ -1,16 +1,13 @@
-import { useEffect } from "react";
+import { Route, Routes } from 'react-router-dom';
+
+import ChatWindow from './ChatWindow';
+import ChatList from './ChatList';
 
 export default function Direct_messages() {
-    useEffect(() => {
-        fetch('direct_messages/')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-    }, []);
     return (
-        <div>
-            hi
-        </div>
+        <Routes>
+            <Route path='' element={<ChatList />} />
+            <Route path=':username' element={<ChatWindow />} />
+        </Routes>
     );
 }
