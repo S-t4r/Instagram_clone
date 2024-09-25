@@ -1,7 +1,9 @@
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import etag
 from .models import Comment, CommentLike, Like, Post
+from instagram.utils import generate_etag
 
 # Create your views here.
 def index(request):
@@ -32,6 +34,8 @@ def index(request):
             except IntegrityError as e:
                 return JsonResponse({'error': f'db err:{e}'}, status=500)
 
+
+@etag(lambda request, post_id: generate_etag(request, "post", post_id))
 def status(request, post_id):
     """The count of likes of a post"""
     if not request.user.is_authenticated:
@@ -43,6 +47,8 @@ def status(request, post_id):
     like_count = post.likes.count()
     return JsonResponse({'liked': liked, 'like_count': like_count}, status=200)
 
+
+@etag(lambda request, comment_id: generate_etag(request, "comment", comment_id))
 def comments_status(request, comment_id):
     """The counts of a comment's likes"""
     if not request.user.is_authenticated:
@@ -53,6 +59,7 @@ def comments_status(request, comment_id):
     liked = CommentLike.objects.filter(user=user, comment=comment).exists()
     like_count = comment.comment_like.count()
     return JsonResponse({'liked': liked, 'like_count': like_count}, status=200)
+
 
 def comments(request):
     """Liking a comment"""
