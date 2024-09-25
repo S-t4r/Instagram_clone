@@ -48,7 +48,7 @@ export default function Header({ username }) {
                 .then(data => {
                     setNotificationCount(data.unread_count);
                 });
-        }, 6000000);
+        }, 60000);
     
         return () => clearInterval(interval); // Cleanup on unmount
     }, []);
