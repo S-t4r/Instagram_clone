@@ -11,9 +11,7 @@ export default function Search() {
         if (searchUser) {
             fetch(`/search/?query=${searchUser}`)
                 .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    
+                .then(data => {  
                     setUserList(data.results);
                 });
         } else {
