@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'likes',
     'notifications',
     'direct_messages',
+    'search',
     'corsheaders',
 ]
 

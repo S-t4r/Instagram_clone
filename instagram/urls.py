@@ -28,4 +28,5 @@ urlpatterns = [
     path('likes/', include('likes.urls')),
     path('notifications/', include('notifications.urls')),
     path('direct_messages/', include('direct_messages.urls')),
+    path('search/', include('search.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
