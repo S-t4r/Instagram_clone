@@ -101,6 +101,11 @@
     word-wrap: break-word;
     white-space: pre-wrap;
     position: relative;
+    transition: background-color 0.5s;
+}
+
+.comment-list li:hover {
+    background-color: #00001f;
 }
 
 .comment-list a {
