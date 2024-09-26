@@ -30,6 +30,7 @@ export default function NewPost() {
 
         // Create a Form
         const formPayLoad = new FormData();
+        formPayLoad.append('title', formData.title);
         formPayLoad.append('image', formData.image);
         formPayLoad.append('caption', formData.caption);
         
@@ -62,6 +63,13 @@ export default function NewPost() {
     
     return (
         <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <input 
+                type="text"
+                name="title"
+                onChange={handleChange}
+                placeholder='Title'
+                required
+            />
             <input 
                 type="file"
                 name="image"

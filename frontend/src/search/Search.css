@@ -1,7 +1,6 @@
 .search {
     display: flex;
     flex-direction: column;
-    border: 1px solid wheat;
     width: 50%;
     margin: auto;
     margin-top: 10px;
@@ -30,6 +29,14 @@
 .search ul li {
     font-size: 2rem;
     font-weight: bold;
+    background-color: #111111;
+    border-radius: 5px;
+    transition: background-color 0.5s;
+    margin-bottom: 10px;
+}
+
+.search ul li:hover {
+    background-color: #222222;
 }
 
 .search ul li a {

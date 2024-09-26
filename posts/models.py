@@ -5,6 +5,7 @@ import os
 
 class Post(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=3)
+    title = models.CharField(max_length=150)
     caption = models.TextField(max_length=500)
     post_image = models.ImageField(upload_to="posts/")
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -32,3 +33,6 @@ class Post(models.Model):
             for comment in self.comments.all()
             ]
         }
+    
+    def __str__(self):
+        return self.title
