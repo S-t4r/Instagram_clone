@@ -6,15 +6,36 @@ import './ChatList.css'
 export default function ChatList() {
     const [chats, setChats] = useState([]);
     const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
-        fetch('/direct_messages/')
+        fetch(`/direct_messages/?page${page}`)
         .then(response => response.json())
         .then(data => {
-            setChats(data)
-        })
-    }, []);
+            const newChats = data.chats.filter(chat => !chats.some(existingChat => existingChat.id === chat.id));
+            const filteredChats = [...chats, ...newChats].filter((chat, index, self) => 
+                index === self.findIndex((p) => p.id === chat.id)
+            );
+            
+            setChats(filteredChats);
+            setHasMore(data.chats.length === 10);
+        });
+    }, [page]);
     
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop !== 
+                document.documentElement.offsetHeight 
+            || !hasMore) {
+                return
+            };
+        setPage(prevPage => prevPage + 1);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [hasMore]);
     
     return (
         <div className="chat-container">
