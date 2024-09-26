@@ -3,8 +3,10 @@ import { useCustomNavigate } from '../utils';
 import getCSRFToken from '../utils';
 import { useUser } from '../userContext/UserContext';
 import './Register.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Login({ setHeaderKey }) {
+    const navigate = useNavigate();
      // Form object to send to view
      const [formData, setFormData] = useState({
         username: "",
@@ -79,7 +81,7 @@ export default function Login({ setHeaderKey }) {
             onChange={handleChange}
         />
         <button type="submit">Login</button>
-        <a href="register">Don't have an account?</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/users/register`); }}>Don't have an account?</a>
       </form>
     );
 }

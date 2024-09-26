@@ -7,18 +7,20 @@ const FollowingPostsContainer = ({ username }) => {
     const [hasMore, setHasMore] = useState(true);
 
     const fetchPosts = (page) => {
-        fetch(`/posts/following?username=${username}&page=${page}`)
-            .then(response => response.json())
-            .then(data => {
-                const newPosts = data.posts.filter(post => !posts.some(existingPost => existingPost.id === post.id));
-                const filteredPosts = [...posts, ...newPosts].filter((post, index, self) => 
-                    index === self.findIndex((p) => p.id === post.id)
-                );
-                setPosts(filteredPosts);
-                // no more request if there are less than 10 posts
-                setHasMore(data.posts.length === 10);
-            })
-            .catch(error => console.error('Error fetching posts:', error));
+        if (username) {
+            fetch(`/posts/following?username=${username}&page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    const newPosts = data.posts.filter(post => !posts.some(existingPost => existingPost.id === post.id));
+                    const filteredPosts = [...posts, ...newPosts].filter((post, index, self) => 
+                        index === self.findIndex((p) => p.id === post.id)
+                    );
+                    setPosts(filteredPosts);
+                    // no more request if there are less than 10 posts
+                    setHasMore(data.posts.length === 10);
+                })
+                .catch(error => console.error('Error fetching posts:', error));
+        }
     };
     
     useEffect(() => {

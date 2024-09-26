@@ -23,6 +23,8 @@ def register(request):
     
     if request.method == "POST":
         username = request.POST["username"]
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         email = request.POST["email"]
         password = request.POST["password"]
         confirmation = request.POST["confirmPassword"]
@@ -40,7 +42,12 @@ def register(request):
             user.save()
 
             # Update profile image
-            user.profile.profile_image = image
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            if image:
+                user.profile.profile_image = image
             user.profile.save()
 
         except IntegrityError as e:

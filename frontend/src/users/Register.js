@@ -4,12 +4,16 @@ import getCSRFToken from '../utils'
 import { useUser } from '../userContext/UserContext';
 import './Register.css'
 import '../posts/Posts.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Register({ setHeaderKey }) {
+    const navigate = useNavigate();
     // Form object to send to view
     const [formData, setFormData] = useState({
         email: "",
         username: "",
+        first_name: "",
+        last_name: "",
         password: "",
         confirmPassword: "",
     });
@@ -39,12 +43,16 @@ export default function Register({ setHeaderKey }) {
     
         const email = event.target['email'].value;
         const username = event.target['username'].value;
+        const first_name = event.target['first_name'].value;
+        const last_name = event.target['last_name'].value;
         const password = event.target['password'].value;
         const confirmPassword = event.target['confirmPassword'].value;
     
         const formData = new FormData();
         formData.append('email', email);
         formData.append('username', username);
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
         formData.append('password', password);
         formData.append('confirmPassword', confirmPassword);
         formData.append('image', file);
@@ -86,12 +94,29 @@ export default function Register({ setHeaderKey }) {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
+            required
+            autoComplete='off'
         />
         <input
             type="text"
             name="username"
             placeholder="Username"
             value={formData.username}
+            onChange={handleChange}
+            required
+        />
+        <input
+            type="text"
+            name="first_name"
+            placeholder="First Name(opt)"
+            value={formData.first_name}
+            onChange={handleChange}
+        />
+        <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name(opt)"
+            value={formData.last_name}
             onChange={handleChange}
         />
         <input
@@ -100,6 +125,7 @@ export default function Register({ setHeaderKey }) {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
+            required
         />
         <input
             type="password"
@@ -107,6 +133,7 @@ export default function Register({ setHeaderKey }) {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
+            required
         />
         <input
             type="file"
@@ -115,7 +142,7 @@ export default function Register({ setHeaderKey }) {
         />
         {imagePreview && <img src={imagePreview} alt="Selected" className='post-image' />}
         <button type="submit">Register</button>
-        <a href="login">Already have an account?</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/users/login`); }}>Already have an account?</a>
       </form>  
     );
 }
