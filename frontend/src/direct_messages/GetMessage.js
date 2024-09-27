@@ -28,7 +28,7 @@ export default function GetMessage({ receiver, refresh }) {
                 }
             })
             .catch(error => console.error('Error fetching messages:', error));
-    }, [receiver, page, refresh]);
+    }, [receiver, page, refresh, messages]);
 
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop !== 
