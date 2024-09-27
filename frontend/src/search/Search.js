@@ -11,7 +11,7 @@ export default function Search() {
         if (searchUser) {
             fetch(`/search/?query=${searchUser}`)
                 .then(response => response.json())
-                .then(data => {  
+                .then(data => {   
                     setUserList(data.results);
                 });
         } else {
@@ -43,6 +43,7 @@ export default function Search() {
                             />
                         </a>
                         <a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/users/${user.username}`); }}>{user.username}</a>
+                        <small>{user.first_name} {user.last_name}</small>
                     </li>
                 ))}
             </ul>

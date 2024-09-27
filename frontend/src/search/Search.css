@@ -35,6 +35,12 @@
     margin-bottom: 10px;
 }
 
+.search ul li small {
+    font-size: 0.8rem;
+    margin-left: auto;
+    margin-top: auto;
+}
+
 .search ul li:hover {
     background-color: #222222;
 }

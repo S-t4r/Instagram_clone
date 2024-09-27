@@ -21,6 +21,10 @@
     background-color: #222222;
 }
 
+.user-profile h1 {
+    margin-bottom: 0;
+}
+
 .profile-details {
     display: flex;
     justify-content: center;
@@ -40,4 +44,22 @@
     border-radius: 100%;
     width: 192px;
     height: 192px;
+}
+
+.edit-button {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.profile-share {
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #111111;
 }

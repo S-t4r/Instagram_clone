@@ -43,6 +43,7 @@ export default function Header({ username }) {
     const [notificationCount, setNotificationCount] = useState(0);
     useEffect(() => {
         if (username) {
+            
             const interval = setInterval(() => {
                 fetch("/notifications/notifications_count")
                     .then(response => response.json())
@@ -52,7 +53,7 @@ export default function Header({ username }) {
             }, 60000);
             return () => clearInterval(interval); // Cleanup on unmount
         }
-    }, []);
+    }, [username]);
     
     const navigate = useNavigate();    
     return (

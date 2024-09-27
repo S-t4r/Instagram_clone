@@ -28,12 +28,11 @@ export default function Login({ setHeaderKey }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Add logic to send data to users/login view
-        const username = event.target['username'].value;
-        const password = event.target['password'].value;
-    
-        const formData = new FormData();
-        formData.append('username', username);
-        formData.append('password', password);
+        const formDataToSubmit = new FormData();
+
+        for (const key in formData) {
+            formDataToSubmit.append(key, formData[key]);
+        }
 
         const csrfToken = getCSRFToken();
     
@@ -42,7 +41,7 @@ export default function Login({ setHeaderKey }) {
             headers: {
                 'X-CSRFToken': csrfToken
             },
-            body: formData,
+            body: formDataToSubmit,
         })
         .then(() => {
             // Fetch messages after form submission
@@ -54,6 +53,7 @@ export default function Login({ setHeaderKey }) {
                 alert(data[0].message);
             }
             else {
+                const username = formData.username
                 setUser({ username })
                 customNavigate(`/users/${username}`);
                 setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header

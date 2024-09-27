@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { calcTime } from "../utils";
 import { useNavigate } from 'react-router-dom';
 
-export default function GetMessage({ receiver }) {
+export default function GetMessage({ receiver, refresh }) {
     const [messages, setMessages] = useState([]);
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
@@ -18,9 +18,9 @@ export default function GetMessage({ receiver }) {
             .then(data => {
                 if (Array.isArray(data.messages)) {
                     const newMessages = data.messages.filter(message => !messages.some(existingMessage => existingMessage.id === message.id));
-                    const filteredMessages = [...messages, ...newMessages].filter((chat, index, self) => 
-                        index === self.findIndex((p) => p.id === chat.id)
-                    );
+                    const filteredMessages = page === 1 
+                        ? [...newMessages, ...messages] 
+                        : [...messages, ...newMessages];
                     setMessages(filteredMessages);
                     setHasMore(data.messages.length === 10);
                 } else {
@@ -28,7 +28,7 @@ export default function GetMessage({ receiver }) {
                 }
             })
             .catch(error => console.error('Error fetching messages:', error));
-    }, [receiver, page]);
+    }, [receiver, page, refresh]);
 
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop !== 
@@ -43,6 +43,14 @@ export default function GetMessage({ receiver }) {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [hasMore]);
+
+    // refresh for newly sent messages
+    useEffect(() => {
+        if (refresh) {
+            window.scrollTo(0, 0);
+            setPage(1);
+        }
+    }, [refresh]);
 
     return (
         <div>
