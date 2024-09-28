@@ -13,7 +13,7 @@ def index(request):
         Q(username__icontains=search_query)
     ).annotate(
         profile_image_url=Concat(Value('media/'), F('profile__profile_image'), output_field=CharField())
-    ).values('username', 'profile_image_url')
+    ).values('username', 'first_name', 'last_name', 'profile_image_url')
 
     results_list = list(results)
     return JsonResponse({'results': results_list})

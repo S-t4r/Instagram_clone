@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('notifications/', include('notifications.urls')),
     path('direct_messages/', include('direct_messages.urls')),
     path('search/', include('search.urls')),
+    path('', RedirectView.as_view(url='/users/register')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

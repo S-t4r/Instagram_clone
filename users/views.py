@@ -19,7 +19,7 @@ def index(request):
 def register(request):
     """Register a user"""
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('/users/')
     
     if request.method == "POST":
         username = request.POST["username"]
@@ -87,23 +87,29 @@ def login_view(request):
             }
             return render(request, "index.html", context)
         return render(request, "index.html")
-    
+
+
 @login_required
 def logout_view(request):
     """Log a user out"""
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+
 def profile(request, username):
     """Send a JSON response containing user's information"""
     user = get_object_or_404(User, username=username)
     profile = get_object_or_404(Profile, user=user)
+    first_name = user.first_name
+    last_name = user.last_name
     followings_count = profile.followings.count()
     followers_count = profile.followers.count()
     posts_count = profile.post_set.count()
 
     return JsonResponse({
         "username": user.username,
+        "first_name": first_name,
+        "last_name": last_name,
         "profile_image": profile.profile_image.url if profile.profile_image else None,
         "bio": profile.bio,
         "followings_count": followings_count,
@@ -111,22 +117,30 @@ def profile(request, username):
         "posts_count": posts_count,
     })
 
+
 @login_required
 def edit(request, username):
     """Edit user profile"""
     if request.method == 'POST':
         profile = get_object_or_404(Profile, user__username=username)
-        
+        # Check Profile
         if profile.user.id != request.user.id:
             return HttpResponseForbidden("You are not allowed to edit this profile.")
+        # Image
         if "image" in request.FILES:
             image = request.FILES["image"]
         else:
             image = None
+        # Info
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         bio = request.POST["bio"]
         
         # Attempt to update image and bio
         try:
+            profile.user.first_name = first_name
+            profile.user.last_name = last_name
+            profile.user.save()
             profile.bio = bio
             if not image is None:
                 profile.profile_image = image
