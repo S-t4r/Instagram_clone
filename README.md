@@ -14,7 +14,7 @@
 - <img src="https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440" width="200" height="200">
 - <img src="https://github.com/user-attachments/assets/efb9b097-04ea-4f90-95e4-f131e7b2c8e7" width="200" height="200">
 - <img src="https://github.com/user-attachments/assets/32769b21-d989-4451-b278-fd239bfbc746" width="200" height="200">
-- <img src="[url](https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440)" width="200" height="200">
+- <img src="https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440" width="200" height="200">
 - <img src="https://github.com/user-attachments/assets/a20fe1ab-e4ef-4ab6-9272-6e26ad78cb6c" width="200" height="200">
 
 ## Installation
