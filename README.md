@@ -14,7 +14,7 @@
 - <img src="https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440" width="200" height="200">
 - <img src="https://github.com/user-attachments/assets/efb9b097-04ea-4f90-95e4-f131e7b2c8e7" width="200" height="200">
 - <img src="https://github.com/user-attachments/assets/32769b21-d989-4451-b278-fd239bfbc746" width="200" height="200">
-- <img src="https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440" width="200" height="200">
+- <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/115424857/371868303-5d81c6df-cf9d-45ed-a0d5-329e1f748f0f.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240929%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240929T155624Z&X-Amz-Expires=300&X-Amz-Signature=edf7af6bf9a8a26f30f143f7c8a09cb8e7bb3f1667e70415267cfc20a546645f&X-Amz-SignedHeaders=host" width="200" height="200">
 - <img src="https://github.com/user-attachments/assets/a20fe1ab-e4ef-4ab6-9272-6e26ad78cb6c" width="200" height="200">
 
 ## Installation
