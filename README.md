@@ -11,11 +11,11 @@
 - The admin panel has been modified to manage Users, Chats, Notifications, Posts, and Comments.
 
 - Here is what the User Interface looks like;
-![Screenshot from 2024-09-29 19-00-41](https://github.com/user-attachments/assets/efb9b097-04ea-4f90-95e4-f131e7b2c8e7)
-![Screenshot from 2024-09-29 19-00-05](https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440)
-![Screenshot from 2024-09-29 18-59-49](https://github.com/user-attachments/assets/5d81c6df-cf9d-45ed-a0d5-329e1f748f0f)
-![Screenshot from 2024-09-29 18-58-38](https://github.com/user-attachments/assets/32769b21-d989-4451-b278-fd239bfbc746)
-![Screenshot from 2024-09-29 19-07-22](https://github.com/user-attachments/assets/a20fe1ab-e4ef-4ab6-9272-6e26ad78cb6c)
+![Screenshot from 2024-09-29 19-00-05 || 200](https://github.com/user-attachments/assets/aaab4b69-6817-43d2-b3db-a7016ce32440)
+![Screenshot from 2024-09-29 19-00-41 || 200](https://github.com/user-attachments/assets/efb9b097-04ea-4f90-95e4-f131e7b2c8e7)
+![Screenshot from 2024-09-29 18-59-49 || 200](https://github.com/user-attachments/assets/5d81c6df-cf9d-45ed-a0d5-329e1f748f0f)
+![Screenshot from 2024-09-29 18-58-38 || 200](https://github.com/user-attachments/assets/32769b21-d989-4451-b278-fd239bfbc746)
+![Screenshot from 2024-09-29 19-07-22 || 200](https://github.com/user-attachments/assets/a20fe1ab-e4ef-4ab6-9272-6e26ad78cb6c)
 
 ## Installation
 
