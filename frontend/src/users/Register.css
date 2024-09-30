@@ -1,0 +1,57 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input {
+    height: 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 5px;
+    width: 50%;
+}
+
+form input:focus {
+    transition: background-color 0.5s;
+    background-color: #dddddd;
+}
+
+form textarea {
+    height: 70px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 5px;
+    width: 50%;
+}
+form textarea:focus {
+    transition: background-color 0.5s;
+    background-color: #dddddd;
+}
+
+form button {
+    color: white;
+    background-color: blue;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    transition: background-color 0.5s;
+    background-color: #222222;
+}
+
+form a {
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+form a:hover {
+    transition: color 0.5s;
+    color: rgb(82, 82, 245);
+}

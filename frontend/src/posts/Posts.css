@@ -1,0 +1,193 @@
+.post-image {
+    width: 100%;
+    max-width: 288px;
+    height: auto;
+    min-height: 288px;
+    object-fit: cover;
+    border: 20px ridge white;
+    border-radius: 5px;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+}
+
+.postObject {
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    width: 70%;
+    margin-top: 20px;
+    border: 10px double #000033;
+    border-radius: 15px;
+}
+
+.postObject a {
+    text-decoration: none;
+}
+
+.postObject button {
+    padding: 5px 10px !important;
+    border: none;
+    border-radius: 5px;
+    background-color: #111111;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.edit-div {
+    text-align: end;
+}
+
+.postObject button:hover {
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+    background-color: #222222;
+}
+
+.postObject textarea {
+    width: 100%;
+}
+
+.postObject sub {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.edit-post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-post textarea {
+    width: 100%;
+    min-height: 150px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.post-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-list {
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+}
+
+.comment-list li {
+    background-color: #000011;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: start;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    position: relative;
+    transition: background-color 0.5s;
+}
+
+.comment-list li:hover {
+    background-color: #00001f;
+}
+
+.comment-list a {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.comment-list p {
+    padding: 0 5px;
+}
+
+.comment-list sub {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.comment-profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.comment-link {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.show-all-comments {
+    font-size: 1rem !important;
+    margin-top: 10px;
+}
+
+.comment-remove {
+    font-size: 0.7rem !important;
+    margin-left: auto !important;
+}
+
+.like-div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.like-div span {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.like-button {
+    text-align: start;
+    font-size: 2rem !important;
+    color: red !important;
+    background: none !important;
+    transition: color 0.5s !important;
+}
+
+.like-button:hover {
+    color: #aa0000 !important;
+}
+
+.comment-like-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.comment-like-div sub {
+    color: red;
+    font-size: 1rem;
+    transition: color 0.5s;
+}
+
+.comment-like-div sub:hover {
+    cursor: pointer;
+    color: #aa0000;
+}
+
+.comment-like-div sup {
+    margin-left: 5px;
+}
