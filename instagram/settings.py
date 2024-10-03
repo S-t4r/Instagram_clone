@@ -28,16 +28,30 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# WebSocket
+ASGI_APPLICATION = 'instagram.asgi.application'
+
+# Channel Layer for redis
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'users',
     'posts',
     'comments',
@@ -57,7 +71,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.http.ConditionalGetMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -131,7 +144,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/build/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/build/')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files

@@ -11,7 +11,6 @@ import Notifications from './notifications/Notifications';
 import Direct_messages from './direct_messages/Direct_messages';
 
 import './App.css';
-import Search from './search/Search';
 
 function App() {
   // To reload the Header
@@ -27,7 +26,6 @@ function App() {
             <Route path="/posts/*" element={<Posts />} />
             <Route path="/notifications/*" element={<Notifications />} />
             <Route path="/direct_messages/*" element={<Direct_messages />} />
-            <Route path="/search/*" element={<Search />} />
             <Route path="" element={<Home />} />
           </Routes>
         </Layout>

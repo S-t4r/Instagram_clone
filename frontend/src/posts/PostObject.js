@@ -15,43 +15,11 @@ export default function PostObject({ post }) {
 
     // Check if the user has liked the post
     useEffect(() => {
-        // Local storage
-        const storedData = localStorage.getItem(`post_${post.id}`);
-
-        // Etag
-        const storedEtag = localStorage.getItem(`etag_${post.id}`);
-
-        if(storedData) {
-            const data = JSON.parse(storedData);
-            if (data) {
+        fetch(`/likes/status/${post.id}/`)
+            .then(response => response.json())
+            .then(data => {
                 setLiked(data.liked);
                 setLikeCount(data.like_count);
-            }
-        }
-
-        fetch(`/likes/status/${post.id}/`, {
-            headers: {
-              'If-None-Match': storedEtag
-            }
-        })
-            .then(response => {
-                if (response.status === 304) {
-                // Data has not changed
-                return null;
-                }
-                else {
-                const newEtag = response.headers.get('ETag');
-                localStorage.setItem(`etag_${post.id}`, newEtag);
-                return response.json();
-                }
-            })
-            .then(data => {
-                // Ensure data is not null
-                if (data) {
-                    localStorage.setItem(`post_${post.id}`, JSON.stringify(data));
-                    setLiked(data.liked);
-                    setLikeCount(data.like_count);
-                }
             })
             .catch(error => console.log(error));
     }, [post.id]);

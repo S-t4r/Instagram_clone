@@ -38,66 +38,27 @@ export default function CommentsList({ comments }) {
     }
     
     // initially get the number of likes
-    const commentsToFetch = comments.filter(comment => !fetchedComments[comment.id]);
-
-    // Save into local storage
     useEffect(() => {
-        commentsToFetch.forEach(comment => {
-          // Store data in local storage
-          const storedData = localStorage.getItem(`comment_${comment.id}`);
-          
-          // ETag to listen for changes
-          const storedEtag = localStorage.getItem(`etag_${comment.id}`);
-      
-          if (storedData) {
-            const data = JSON.parse(storedData);
-            setCommentLiked(prevState => ({
-              ...prevState,
-              [comment.id]: {
-                liked: data.liked,
-                likeCount: data.like_count
-              }
-            }));
-            setFetchedComments(prevState => ({
-              ...prevState,
-              [comment.id]: true
-            }));
-          }
-      
-          fetch(`/likes/comments_status/${comment.id}`, {
-            headers: {
-              'If-None-Match': storedEtag
+        comments.forEach(comment => {
+            if (!fetchedComments[comment.id]) {
+                fetch(`/likes/comments_status/${comment.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setCommentLiked(prevState => ({
+                        ...prevState,
+                        [comment.id]: {
+                            liked: data.liked,
+                            likeCount: data.like_count
+                        }
+                    }));
+                    setFetchedComments(prevState => ({
+                        ...prevState,
+                        [comment.id]: true
+                    }));
+                });
             }
-          })
-          .then(response => {
-            if (response.status === 304) {
-              // Data has not changed
-              return null;
-            }
-            else {
-              const newEtag = response.headers.get('ETag');
-              localStorage.setItem(`etag_${comment.id}`, newEtag);
-              return response.json();
-            }
-          })
-          .then(data => {
-            if (data) {
-              localStorage.setItem(`comment_${comment.id}`, JSON.stringify(data));
-              setCommentLiked(prevState => ({
-                ...prevState,
-                [comment.id]: {
-                  liked: data.liked,
-                  likeCount: data.like_count
-                }
-              }));
-              setFetchedComments(prevState => ({
-                ...prevState,
-                [comment.id]: true
-              }));
-            }
-          });
         });
-      }, [commentsToFetch]);
+    }, [comments, fetchedComments]);
 
     function handleLike(commentId) {
         const csrfToken = getCSRFToken();

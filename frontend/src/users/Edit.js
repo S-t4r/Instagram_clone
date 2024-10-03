@@ -5,13 +5,7 @@ import { useParams } from 'react-router-dom';
 import '../posts/Posts.css'
 
 export default function Edit() {
-    const [formData, setFormData] = useState({ 
-        first_name: '',
-        last_name: '',
-        bio: '',
-        image: null,
-    });
-
+    const [formData, setFormData] = useState({ bio: '', image: null });
     const customNavigate = useCustomNavigate();
     const { username } = useParams();
 
@@ -20,35 +14,37 @@ export default function Edit() {
         fetch(`/users/${username}`)
         .then(response => response.json())
         .then(data => {
-            setFormData({ 
-                first_name: data.first_name,
-                last_name: data.last_name,
-                bio: data.bio,
-                image:null,
-            });
+            setFormData({ bio: data.bio, image:null })
         });
     }, [username]);
 
     const handleChange = (event) => {
         const { name, value, files } = event.target;
     
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: name === 'image' && files[0] ? files[0] : value,
-            ...(name === 'image' && files[0] && { imagePreview: URL.createObjectURL(files[0]) })
-        }));
+        if (name === 'image' && files[0]) {
+            const imageUrl = URL.createObjectURL(files[0]);
+            setFormData((prevData) => ({
+                ...prevData,
+                imagePreview: imageUrl,
+                image: files[0]
+            }));
+        } 
+        else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value
+            }));
+        }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         // Create a Form
-        const formPayLoadToSubmit = new FormData();
-
-        for (const key in formData) {
-            formPayLoadToSubmit.append(key, formData[key]);
-        }
-
+        const formPayLoad = new FormData();
+        formPayLoad.append('image', formData.image);
+        formPayLoad.append('bio', formData.bio);
+        
         const csrfToken = getCSRFToken();
         
 
@@ -58,7 +54,7 @@ export default function Edit() {
             headers: {
                 'X-CSRFToken': csrfToken
             },
-            body: formPayLoadToSubmit,
+            body: formPayLoad,
         })
         .then(() => {
             // Fetch messages after form submission
@@ -82,30 +78,13 @@ export default function Edit() {
         <form onSubmit={handleSubmit}>
             <input type="file" name="image" onChange={handleChange} />
             {formData.imagePreview && <img src={formData.imagePreview} alt="Selected" className='post-image' />}
-            <input
-                type="text"
-                name="first_name"
-                placeholder="First Name"
-                value={formData.first_name}
-                onChange={handleChange}
-            />
-            <input
-                type="text"
-                name="last_name"
-                placeholder="Last Name"
-                value={formData.last_name}
-                onChange={handleChange}
-            />
             <textarea
                 name='bio'
                 placeholder='Bio'
                 value={formData.bio}
                 onChange={handleChange}
             />
-            <div className='edit-button'>
-                <button type='submit'>Submit Changes</button>
-                <button type='button' onClick={() => customNavigate(`/users/${username}/`)}>Cancel</button>
-            </div>
+            <button type='submit'>Submit Changes</button>
         </form>
     );
 }

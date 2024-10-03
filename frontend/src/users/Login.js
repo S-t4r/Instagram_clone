@@ -3,10 +3,8 @@ import { useCustomNavigate } from '../utils';
 import getCSRFToken from '../utils';
 import { useUser } from '../userContext/UserContext';
 import './Register.css'
-import { useNavigate } from 'react-router-dom';
 
 export default function Login({ setHeaderKey }) {
-    const navigate = useNavigate();
      // Form object to send to view
      const [formData, setFormData] = useState({
         username: "",
@@ -28,11 +26,12 @@ export default function Login({ setHeaderKey }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Add logic to send data to users/login view
-        const formDataToSubmit = new FormData();
-
-        for (const key in formData) {
-            formDataToSubmit.append(key, formData[key]);
-        }
+        const username = event.target['username'].value;
+        const password = event.target['password'].value;
+    
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
 
         const csrfToken = getCSRFToken();
     
@@ -41,7 +40,7 @@ export default function Login({ setHeaderKey }) {
             headers: {
                 'X-CSRFToken': csrfToken
             },
-            body: formDataToSubmit,
+            body: formData,
         })
         .then(() => {
             // Fetch messages after form submission
@@ -53,7 +52,6 @@ export default function Login({ setHeaderKey }) {
                 alert(data[0].message);
             }
             else {
-                const username = formData.username
                 setUser({ username })
                 customNavigate(`/users/${username}`);
                 setHeaderKey(prevKey =>  prevKey + 1); // re-render the Header
@@ -81,7 +79,7 @@ export default function Login({ setHeaderKey }) {
             onChange={handleChange}
         />
         <button type="submit">Login</button>
-        <a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/users/register`); }}>Don't have an account?</a>
+        <a href="register">Don't have an account?</a>
       </form>
     );
 }

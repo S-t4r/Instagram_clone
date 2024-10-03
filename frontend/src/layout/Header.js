@@ -38,24 +38,22 @@ export default function Header({ username }) {
             console.error('Error:', error);
         });
     }
-    
+
     // Fetch notifications and alert user every 60 seconds
     const [notificationCount, setNotificationCount] = useState(0);
     useEffect(() => {
-        if (username) {
-            
-            const interval = setInterval(() => {
-                fetch("/notifications/notifications_count")
-                    .then(response => response.json())
-                    .then(data => {
-                        setNotificationCount(data.unread_count);
-                    });
-            }, 60000);
-            return () => clearInterval(interval); // Cleanup on unmount
-        }
-    }, [username]);
+        const interval = setInterval(() => {
+            fetch("/notifications/notifications_count")
+                .then(response => response.json())
+                .then(data => {
+                    setNotificationCount(data.unread_count);
+                });
+        }, 60000);
     
-    const navigate = useNavigate();    
+        return () => clearInterval(interval); // Cleanup on unmount
+    }, []);
+    
+    const navigate = useNavigate();
     return (
         <header className='header-secondary'>
             <h1>Instagram</h1>

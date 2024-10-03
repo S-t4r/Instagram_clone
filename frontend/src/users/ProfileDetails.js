@@ -26,7 +26,7 @@ const ProfileDetails = ({ username, loggedInUser }) => {
         user.followers_count = newCount;
         setUser({ ...user })
     };
-    
+
     return (
         <div>
             <div>
@@ -36,7 +36,6 @@ const ProfileDetails = ({ username, loggedInUser }) => {
                     alt={`${user.username}'s profile`}
                 />
                 <h1>{user.username}</h1>
-                <small>{user.first_name} {user.last_name}</small>
                 <p>{user.bio}</p>
             </div>
             <ProfileStats 

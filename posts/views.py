@@ -16,22 +16,15 @@ def index(request):
 @login_required
 def create_posts(request):
     if request.method == 'POST':
-        title = request.POST.get('title', '')
         caption = request.POST.get('caption', '')
         image = request.FILES.get('image', None)
-        
-        # Check for image
         if image is None:
             messages.error(request, "You must provide an image.")
             return JsonResponse({'error': "You must provide an image."}, status=400)
-        # Check title
-        if title == '':
-            messages.error(request, "Enter a Title!")
-            return JsonResponse({'error': "Enter a Title!"}, status=400)
         try:
             user = get_object_or_404(User, username=request.user)
             profile = get_object_or_404(Profile, user=user)
-            post = Post.objects.create(profile=profile, title=title, post_image=image, caption=caption)
+            post = Post.objects.create(profile=profile, post_image=image, caption=caption)
             post.save()
             return JsonResponse({'success': "Post created successfully."})
         except IntegrityError as e:

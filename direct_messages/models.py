@@ -4,7 +4,7 @@ from users.models import User
 # Create your models here.
 class Chat(models.Model):
     participants = models.ManyToManyField(User)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
@@ -15,7 +15,6 @@ class Message(models.Model):
 
     def serialize(self):
         return {
-            'id': self.id,
             'sender': self.sender.username,
             'receiver': self.receiver.username,
             'text': self.text,

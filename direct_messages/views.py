@@ -1,4 +1,3 @@
-from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -8,31 +7,18 @@ from users.models import User
 # Create your views here.
 def index(request):
     """A list of chats"""
-    chats = Chat.objects.filter(participants=request.user).order_by('-timestamp')
-    # Show 10 chats per page
-    paginator = Paginator(chats, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
+    chats = Chat.objects.filter(participants=request.user)
     chat_data = []
-    for chat in page_obj:
+    for chat in chats:
         other_user = chat.participants.exclude(id=request.user.id).first()
         last_message = chat.messages.order_by('-timestamp').first()
         if other_user and last_message:
             chat_data.append({
-                'id': chat.id,
                 'timestamp': last_message.timestamp.isoformat(),
                 'other_user': other_user.username,
                 'last_message': last_message.text
             })
-
-    return JsonResponse({
-        'chats': chat_data,
-        'has_next': page_obj.has_next(),
-        'has_previous': page_obj.has_previous(),
-        'num_pages': paginator.num_pages,
-        'current_page': page_obj.number,
-    })
+    return JsonResponse(chat_data, safe=False)
 
 
 def get_chat_messages(request, username):
@@ -40,23 +26,11 @@ def get_chat_messages(request, username):
     other_user = get_object_or_404(User, username=username)
     chat = Chat.objects.filter(participants=user).filter(participants=other_user).first()
     if not chat:
-        return JsonResponse({'status': 'no_chat', 'error': 'Chat does not exist yet'}, status=200)
+        return JsonResponse({'error': 'Chat not found'}, status=404)
     
     messages = Message.objects.filter(chat=chat).order_by('-timestamp')
-    
-    # Show 10 messages per page
-    paginator = Paginator(messages, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    serialized_messages = [message.serialize() for message in page_obj]
-    return JsonResponse({
-        'messages': serialized_messages,
-        'has_next': page_obj.has_next(),
-        'has_previous': page_obj.has_previous(),
-        'num_pages': paginator.num_pages,
-        'current_page': page_obj.number,
-    })
+    serialized_messages = [message.serialize() for message in messages]
+    return JsonResponse(serialized_messages, safe=False)
 
 
 def send_messages(request):

@@ -83,13 +83,3 @@ body {
 .navbar button i {
     font-size: 2rem;
 }
-
-a {
-    text-decoration: none;
-    transition: color 0.5s;
-    color: #7a007a;
-}
-
-a:hover {
-    color: #9a009a;
-}
