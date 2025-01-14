@@ -16,14 +16,14 @@ import routing
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "instagram.settings")
 
-django_asgi_app = get_asgi_application()
-
 application = ProtocolTypeRouter(
     {
-        "http": django_asgi_app,
+        "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(
-                URLRouter(routing.websocket_urlpatterns)
+                URLRouter(
+                    routing.websocket_urlpatterns
+                    )
             )
         ),
     }
